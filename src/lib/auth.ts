@@ -1,6 +1,6 @@
 // better-auth configuration file
-import {betterAuth} from "better-auth";
-import {mongodbAdapter} from "better-auth/adapters/mongodb";
+import { betterAuth } from "better-auth";
+import {mongodbAdapter} from "@better-auth/mongo-adapter";
 import {jwt} from "better-auth/plugins";
 import {MongoClient} from "mongodb";
 import dotenv from "dotenv";

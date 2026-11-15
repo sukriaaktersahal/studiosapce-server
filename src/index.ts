@@ -1,21 +1,32 @@
-// index.ts file for server 
+// server src index.ts file
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import {auth} from "./lib/auth.js";
+import {toNodeHandler} from "better-auth/node";
 
 dotenv.config();
-const app= express();
+
+const app = express();
 const PORT= process.env.PORT || 5000;
 
 // CORS setup
-app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:3000", credentials: true
-}));
+app.use(
+  cors({
+    origin : process.env.CLIENT_URL || "http://localhost:3000",
+    credentials: true, 
+  })
+);
 
-app.use(express.json());
+// BetterAuth endpoint handlers
+app.all("/api/auth/{*any}", toNodeHandler(auth));
 
-app.get("/", (req, res)=>{
-  res.json({ message: "Server is running!"});
+app.use(express.json({limit : "10mb"}));
+app.use(cookieParser());
+
+app.get("/", (req, res) =>{
+  res.json({message : "StudioSpace API is running!", status: "ok"});
 });
 
 app.listen(PORT, ()=>{
