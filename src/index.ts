@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import {auth} from "./lib/auth.js";
 import {toNodeHandler} from "better-auth/node";
+import studiosRouter from "./routes/studios.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.all("/api/auth/{*any}", toNodeHandler(auth));
 
 app.use(express.json({limit : "10mb"}));
 app.use(cookieParser());
+app.use("/api/studios", studiosRouter);
 
 app.get("/", (req, res) =>{
   res.json({message : "StudioSpace API is running!", status: "ok"});
