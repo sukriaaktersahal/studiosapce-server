@@ -1,32 +1,25 @@
 // middleware auth.ts file for verifying JWT tokens using BetterAuth
 import { Request, Response, NextFunction } from "express";
-import { jwtVerify, createRemoteJWKSet } from "jose";
-
-// better-auth JWS 
-const JWKS = createRemoteJWKSet(
-  new URL(`${process.env.BETTER_AUTH_URL}/api/auth/jwks`)
-);
+import jwt from "jsonwebtoken";
 
 export async function verifyJWT(req: Request, res: Response, next: NextFunction){
-  // betterauth keep token default
-  const token = req.cookies["better-auth.session_token"];
+  // better-auth save cookies as
+  let token = req.cookies["jwt_token"];
 
-  if (!token) {
-    // no token in cookies
+  if(!token && req.headers.authorization?.startsWith("Bearer ")){
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  // if no token found
+  if(!token){
     return res.status(401).json({error: "Unauthorized: No token provided"});
   }
 
-  try {
-    // verify token
-    const { payload } = await jwtVerify(token, JWKS, {
-      issuer: process.env.BETTER_AUTH_URL,
-      audience: process.env.BETTER_AUTH_URL,
-    });
-    
-    // if token if valid
-    (req as any).user = payload;
+  try{
+    const decoded = jwt.verify(token, process.env.BETTER_AUTH_SECRET!);
+    (req as any).user = decoded;
     next();
   }catch (error){
-    return res.status(401).json({error: "Unauthorized: Invalid token"});
+    return res.status(401).json({ error: "Unauthorized: Invalid token" });
   }
 }

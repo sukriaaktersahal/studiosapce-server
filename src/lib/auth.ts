@@ -24,7 +24,18 @@ export const auth = betterAuth({
   },
 
   // JWT plugin 
-  plugins: [jwt()],
+  plugins: [
+    jwt({
+      jwt:{
+        definePayload:({user}) => ({
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        }),
+      },
+    }),
+  ],
+
 
   // secret key(32+ character)
   secret: process.env.BETTER_AUTH_SECRET!,
