@@ -9,6 +9,7 @@ import {auth} from "./lib/auth.js";
 import {toNodeHandler} from "better-auth/node";
 import studiosRouter from "./routes/studios.js";
 import authTokenRouter from "./routes/auth-token.js";
+import bookingsRouter from "./routes/bookings.js";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use(cookieParser());
 
 app.use("/api/studios", studiosRouter);
 app.use("/api/auth-token", authTokenRouter);
+app.use("/api/bookings", bookingsRouter);
 
 app.get("/", (req, res) =>{
   res.json({message : "StudioSpace API is running!", status: "ok"});
