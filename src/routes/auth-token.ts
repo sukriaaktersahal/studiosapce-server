@@ -1,7 +1,7 @@
 // auth-token route file
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { auth } from "../lib/auth";
+import { auth } from "../lib/auth.js";
 import { fromNodeHeaders } from "better-auth/node";
 
 const router = Router();

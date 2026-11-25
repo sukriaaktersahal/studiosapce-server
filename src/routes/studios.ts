@@ -1,8 +1,8 @@
 // CRUD operations for studios 
 import { Router } from "express";
 import { ObjectId } from "mongodb";
-import { db } from "../lib/auth"; 
-import { verifyJWT } from "../middleware/auth";
+import { db } from "../lib/auth.js"; 
+import { verifyJWT } from "../middleware/auth.js";
 
 const router = Router();
 const studiosCollection = db.collection("studios");
@@ -36,7 +36,7 @@ router.post("/", verifyJWT, async (req, res)=> {
 });
 
 // update studio (protected with JWT)
-router.put("/:id", verifyJWT, async (req, res)=> {
+router.put("/:id", verifyJWT, async (req, res)=>{
   const id = req.params.id as string;
   const result = await studiosCollection.updateOne(
     { _id: new ObjectId(id)},

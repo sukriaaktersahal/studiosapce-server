@@ -1,8 +1,8 @@
 // booking details file
 import { Router } from "express";
 import { ObjectId } from "mongodb";
-import { db } from "../lib/auth";
-import { verifyJWT } from "../middleware/auth";
+import { db } from "../lib/auth.js";
+import { verifyJWT } from "../middleware/auth.js";
 
 const router = Router();
 const bookingsCollection = db.collection("bookings");
