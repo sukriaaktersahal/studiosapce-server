@@ -23,11 +23,18 @@ export const auth = betterAuth({
     requireEmailVerification : false, 
   },
 
+  socialProviders:{
+    google:{
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
+  },
+
   // JWT plugin 
   plugins: [
     jwt({
       jwt:{
-        definePayload:({user}) => ({
+        definePayload:({user}: {user: any}) => ({
           id: user.id,
           email: user.email,
           name: user.name,

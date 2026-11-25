@@ -37,7 +37,7 @@ router.post("/", verifyJWT, async (req, res) =>{
 });
 
 // own user bookings (Protected - JWT)
-router.get("/my-bookings", verifyJWT, async (req, res)=> {
+router.get("/my-bookings", verifyJWT, async (req, res)=>{
   const bookings = await bookingsCollection
     .find({ userEmail: (req as any).user.email})
     .toArray();
@@ -45,7 +45,7 @@ router.get("/my-bookings", verifyJWT, async (req, res)=> {
 });
 
 // cancel booking (Protected - JWT)
-router.put("/:id/cancel", verifyJWT, async (req, res)=> {
+router.put("/:id/cancel", verifyJWT, async (req, res)=>{
   const result = await bookingsCollection.updateOne(
     { _id: new ObjectId(req.params.id as string)},
     { $set: { status: "Cancelled" } }
