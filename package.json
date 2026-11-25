@@ -1,6 +1,10 @@
 {
   "name": "studiosapce-server",
   "version": "1.0.0",
+  "type": "module",
+  "engines":{
+    "node": "22.x"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,7 +15,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@better-auth/mongo-adapter": "^1.7.25",
     "better-auth": "^1.7.28",
